@@ -1,0 +1,4 @@
+volcengine-python-sdk[ark]
+python-dotenv
+pillow
+requests
