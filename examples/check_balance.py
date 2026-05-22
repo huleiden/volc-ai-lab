@@ -1,11 +1,15 @@
 import os
-from dotenv import load_dotenv
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from core.config import load_profile
 from volcenginesdkbilling.api.billing_api import BILLINGApi
 from volcenginesdkbilling.models.query_balance_acct_request import QueryBalanceAcctRequest
 import volcenginesdkcore
 
 def check_balance():
-    load_dotenv()
+    load_profile()
     
     # 尝试加载 credentials.properties
     import io

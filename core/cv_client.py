@@ -13,7 +13,7 @@ class CvClient:
     def __init__(self):
         api_key = os.getenv("ARK_API_KEY")
         if not api_key:
-            raise ValueError(f"请在 {os.path.join(BASE_DIR, '.env')} 文件中配置 ARK_API_KEY")
+            raise ValueError("请在对应的 .env.{profile} 文件中配置 ARK_API_KEY")
         
         # 移除可能的引号
         self.api_key = api_key.strip('"').strip("'")
@@ -111,7 +111,7 @@ class CvClient:
         response = requests.get(url, headers=self.headers)
         return response.json()
 
-    def wait_for_result(self, task_id, timeout=300):
+    def wait_for_result(self, task_id, timeout=300, poll_interval=2):
         """循环等待结果"""
         start_time = time.time()
         while time.time() - start_time < timeout:
@@ -120,9 +120,10 @@ class CvClient:
             print(f"任务状态: {status}")
             
             if status == "succeeded":
-                return result.get("output", {}).get("video_url")
+                output = result.get("output", {})
+                return output.get("image_url") or output.get("video_url")
             elif status == "failed":
                 raise Exception(f"任务失败: {result.get('error')}")
             
-            time.sleep(10)
+            time.sleep(poll_interval)
         raise Exception("任务超时")

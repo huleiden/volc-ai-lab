@@ -1,13 +1,13 @@
 import os
 import sys
-# 确保可以导入 core 模块
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from core.config import load_profile
 from core.ark_client import ArkClient
-from dotenv import load_dotenv
 
 def test_chat():
-    load_dotenv()
+    load_profile()
     
     # 按照优先级自动寻找可用的接入点，优先消耗极速版和轻量版的免费 Token
     endpoint_id = (

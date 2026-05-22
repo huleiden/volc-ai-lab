@@ -10,7 +10,7 @@ class ArkClient:
     def __init__(self):
         api_key = os.getenv("ARK_API_KEY")
         if not api_key:
-            raise ValueError(f"请在 {os.path.join(BASE_DIR, '.env')} 文件中配置 ARK_API_KEY")
+            raise ValueError("请在对应的 .env.{profile} 文件中配置 ARK_API_KEY")
         # 移除可能的引号
         api_key = api_key.strip('"').strip("'")
         self.client = Ark(api_key=api_key)

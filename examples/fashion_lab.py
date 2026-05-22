@@ -1,15 +1,14 @@
 import os
 import sys
-from dotenv import load_dotenv
 
-# 确保可以导入 core 模块
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from core.config import load_profile
 from core.ark_client import ArkClient
 from core.cv_client import CvClient
 
 def run_fashion_change():
-    load_dotenv()
+    load_profile()
     
     # 1. 配置接入点 (按优先级寻找可用的 SeaDREAM 版本)
     mini_id = os.getenv("SEED_2_0_MINI_ENDPOINT_ID")
